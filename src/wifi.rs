@@ -16,6 +16,10 @@ pub struct WiFiDevice<'a> {
 impl<'a> WiFiDevice<'a> {
     // Get the list of access points visible to this device.
     pub fn get_access_points(&self) -> Result<Vec<AccessPoint>> {
+        self.request_scan()?;
+
+        std::thread::sleep(std::time::Duration::from_secs(5));
+
         let mut access_points = Vec::new();
 
         let paths = self
